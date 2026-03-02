@@ -8,14 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.brainx.cmp_base.presentation.navigation.AppNavHostGraph
-import com.brainx.cmp_base.presentation.theme.MovieAppTheme
+import com.brainx.cmp_base.presentation.theme.AppTheme
 
 
 @Composable
 @Preview
 fun App() {
 
-    MovieAppTheme {
+    AppTheme {
         val navController = rememberNavController()
 
         Scaffold(

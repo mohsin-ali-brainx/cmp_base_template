@@ -52,7 +52,6 @@ kotlin {
             implementation(project(":shared:core:domain"))
             implementation(project(":shared:core:bootstrapDI"))
             implementation(project(":shared:utilsExtensions"))
-            implementation(project(":shared:uiComponents"))
 
 
         }
@@ -76,7 +75,6 @@ kotlin {
             implementation(project(":shared:core:bootstrapDI"))
             implementation(project(":shared:core:domain"))
             implementation(project(":shared:utilsExtensions"))
-            implementation(project(":shared:uiComponents"))
 
 
             implementation(libs.constraintlayout.compose.multiplatform)
@@ -90,7 +88,6 @@ kotlin {
             implementation(project(":shared:core:bootstrapDI"))
             implementation(project(":shared:core:domain"))
             implementation(project(":shared:utilsExtensions"))
-            implementation(project(":shared:uiComponents"))
 
 
         }
