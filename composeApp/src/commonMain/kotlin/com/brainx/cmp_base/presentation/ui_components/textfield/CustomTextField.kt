@@ -184,6 +184,10 @@ fun CustomTextField(
     shape: Shape? = null,
     borderColor: Color? = null,
     borderWidth: Dp? = null,
+    contentPaddingStart: Dp = AppDimens.Padding.smallPadding,
+    contentPaddingEnd: Dp = AppDimens.Padding.smallPadding,
+    contentPaddingTop: Dp = AppDimens.Padding.smallPadding,
+    contentPaddingBottom: Dp = AppDimens.Padding.smallPadding,
 ) {
     val hasBorder = borderColor != null && borderWidth != null && borderWidth > 0.dp
     val hasStyling = backgroundColor != null || shape != null || hasBorder
@@ -203,14 +207,16 @@ fun CustomTextField(
         .then(
             when {
                 hasBorder && containerShape != null ->
-                    Modifier.border(borderWidth, borderColor, containerShape)
+                    Modifier.border(borderWidth!!, borderColor!!, containerShape)
                 else -> Modifier
             }
         )
         .then(if (containerShape != null) Modifier.clip(containerShape) else Modifier)
         .padding(
-            vertical = AppDimens.Padding.xxSmallPadding,
-            horizontal = AppDimens.Padding.xxSmallPadding
+            start = contentPaddingStart,
+            end = contentPaddingEnd,
+            top = contentPaddingTop,
+            bottom = contentPaddingBottom
         )
     Layout(
         modifier = modifier.then(layoutModifier),
