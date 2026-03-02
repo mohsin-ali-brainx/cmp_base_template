@@ -76,7 +76,7 @@ private fun AppDefaultButton(
         )
         AnimatedVisibility(showLoader){
             CircularProgressIndicator(
-                Modifier.padding(AppDimens.Padding.textPadding).size(loaderSize),
+                Modifier.padding(AppDimens.Padding.textPadding4).size(loaderSize),
                 color = textColor
             )
         }

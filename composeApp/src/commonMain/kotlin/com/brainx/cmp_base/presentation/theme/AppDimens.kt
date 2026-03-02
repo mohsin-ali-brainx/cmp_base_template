@@ -8,13 +8,11 @@ sealed interface AppDimens{
 
     data object Padding: AppDimens {
         val zero = 0.dp
-        val textPadding = 4.0.dp
-        val xxSmallPadding = 2.0.dp
-        val smallPadding = 8.0.dp
-        val defaultPadding = 16.0.dp
-        val mediumPadding = 20.0.dp
-        val xLargePadding = 42.0.dp
-        val smallPadding12 = 12.0.dp
+        val textPadding4 = 4.0.dp
+        val padding4 = 4.0.dp
+        val padding8 = 8.0.dp
+        val padding12 = 12.0.dp
+        val padding16 = 16.0.dp
     }
 
     data object Radius: AppDimens {
@@ -34,6 +32,8 @@ sealed interface AppDimens{
 
     data object EditText: AppDimens {
         val searchBarHeight = 58.dp
+        val borderWidth = 1.dp
+
     }
 
 
@@ -54,9 +54,12 @@ sealed interface AppDimens{
     }
 
     data object Fonts: AppDimens{
+        val font12 = 12.sp
         val font16 = 16.sp
         val font18 = 18.sp
+        val font20 = 20.sp
         val font24 = 24.sp
+
 
     }
 

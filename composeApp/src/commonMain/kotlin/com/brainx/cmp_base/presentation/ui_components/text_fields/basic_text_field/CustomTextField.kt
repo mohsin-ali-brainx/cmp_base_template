@@ -1,21 +1,14 @@
-package com.brainx.cmp_base.presentation.ui_components.textfield
+package com.brainx.cmp_base.presentation.ui_components.text_fields.basic_text_field
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -38,21 +31,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import com.brainx.cmp_base.presentation.theme.AppDimens
-import com.brainx.cmp_base.presentation.theme.colors.LocalAppTheme
 import com.brainx.cmp_base.presentation.theme.defaultEditTextShape
+import com.brainx.cmp_base.presentation.ui_components.text_fields.editTextStyle
 import com.brainx.utils_extensions.constants.ExtConstants
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import basecmp.composeapp.generated.resources.Res
-import basecmp.composeapp.generated.resources.ic_search
-import basecmp.composeapp.generated.resources.search_movies
-import com.brainx.cmp_base.presentation.theme.AppTheme
 
 @Composable
 private fun CustomBasicTextField(
@@ -73,6 +58,7 @@ private fun CustomBasicTextField(
     hintTextAlignment: Alignment = Alignment.Center,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.None,
+    visualTransformation: VisualTransformation=VisualTransformation.None,
     keyboardActions: KeyboardActions = KeyboardActions(),
     onCursorPositionChange: ((Int) -> Unit)?=null,
     onValueChange: (String) -> Unit,
@@ -134,6 +120,7 @@ private fun CustomBasicTextField(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
+        visualTransformation = visualTransformation,
         keyboardActions = keyboardActions,
         singleLine = singleLine,
         minLines = minLines?: ExtConstants.IntegerConstants.ONE,
@@ -174,11 +161,12 @@ fun CustomTextField(
     maxLines:Int?=null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.None,
+    visualTransformation: VisualTransformation=VisualTransformation.None,
     keyboardActions: KeyboardActions = KeyboardActions(),
     onValueChange: (String) -> Unit,
-    paddingLeadingIconEnd: Dp = AppDimens.Padding.smallPadding,
-    paddingTrailingIconStart: Dp = AppDimens.Padding.smallPadding,
-    paddingTrailingIconEnd: Dp = AppDimens.Padding.smallPadding,
+    paddingLeadingIconEnd: Dp = AppDimens.Padding.padding4,
+    paddingTrailingIconStart: Dp = AppDimens.Padding.padding4,
+    paddingTrailingIconEnd: Dp = AppDimens.Padding.padding4,
     leadingIcon: (@Composable() () -> Unit)? = null,
     trailingIcon: (@Composable() () -> Unit)? = null,
     onCursorPositionChange: ((Int) -> Unit)? = null,
@@ -188,10 +176,10 @@ fun CustomTextField(
     borderColor: Color? = null,
     borderBrush: Brush? = null,
     borderWidth: Dp? = null,
-    contentPaddingStart: Dp = AppDimens.Padding.smallPadding,
-    contentPaddingEnd: Dp = AppDimens.Padding.smallPadding,
-    contentPaddingTop: Dp = AppDimens.Padding.smallPadding,
-    contentPaddingBottom: Dp = AppDimens.Padding.smallPadding,
+    contentPaddingStart: Dp = AppDimens.Padding.padding4,
+    contentPaddingEnd: Dp = AppDimens.Padding.padding4,
+    contentPaddingTop: Dp = AppDimens.Padding.padding4,
+    contentPaddingBottom: Dp = AppDimens.Padding.padding4,
 ) {
     if (backgroundColor != null && backgroundBrush != null) {
         throw IllegalArgumentException("CustomTextField: 'backgroundColor' and 'backgroundBrush' cannot be used together. Use only one.")
@@ -250,12 +238,12 @@ fun CustomTextField(
                         )
                     }else if (trailingIcon != null){
                         Modifier.padding(
-                            start = AppDimens.Padding.smallPadding,
+                            start = AppDimens.Padding.padding4,
                             end = paddingTrailingIconStart
                         )
                     }else{
                         Modifier.padding(
-                                horizontal = AppDimens.Padding.smallPadding,
+                                horizontal = AppDimens.Padding.padding4,
                             )
                     }
                 )
@@ -273,6 +261,7 @@ fun CustomTextField(
                     maxLines = maxLines,
                     hintTextStyle = hintTextStyle,
                     imeAction = imeAction,
+                    visualTransformation = visualTransformation,
                     hintTextAlignment = Alignment.TopStart,
                     keyboardActions = keyboardActions,
                     onValueChange = { onValueChange(it) },

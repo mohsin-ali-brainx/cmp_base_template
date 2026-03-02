@@ -1,4 +1,4 @@
-package com.brainx.cmp_base.presentation.ui_components.textfield.previews
+package com.brainx.cmp_base.presentation.ui_components.text_fields.basic_text_field.previews
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ import basecmp.composeapp.generated.resources.Res
 import basecmp.composeapp.generated.resources.ic_search
 import com.brainx.cmp_base.presentation.theme.AppDimens
 import com.brainx.cmp_base.presentation.theme.AppTheme
-import com.brainx.cmp_base.presentation.ui_components.textfield.CustomTextField
+import com.brainx.cmp_base.presentation.ui_components.text_fields.basic_text_field.CustomTextField
 import com.brainx.utils_extensions.constants.ExtConstants
 import org.jetbrains.compose.resources.painterResource
 
@@ -57,7 +57,7 @@ private fun Preview_LeadingIcon() {
                 onValueChange = { },
                 leadingIcon = {
                     Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(start = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -78,7 +78,7 @@ private fun Preview_TrailingIcon() {
                 onValueChange = { },
                 trailingIcon = {
                     Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(end = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -99,14 +99,14 @@ private fun Preview_BothIcons() {
                 onValueChange = { },
                 leadingIcon = {
                     Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(start = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
                 },
                 trailingIcon = {
                     Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(end = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -151,7 +151,7 @@ private fun Preview_BackgroundLeadingIcon() {
                 shape = RoundedCornerShape(AppDimens.ShapeDimens.defaultEditTextCornerRadius),
                 leadingIcon = {
                     Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(start = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -175,7 +175,7 @@ private fun Preview_BackgroundTrailingIcon() {
                 shape = RoundedCornerShape(AppDimens.ShapeDimens.defaultEditTextCornerRadius),
                 trailingIcon = {
                     Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(end = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -477,7 +477,7 @@ private fun Preview_ContentPaddingLeadingIcon() {
                 shape = RoundedCornerShape(12.dp),
                 leadingIcon = {
                     Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(start = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -505,7 +505,7 @@ private fun Preview_ContentPaddingTrailingIcon() {
                 contentPaddingBottom = 12.dp,
                 trailingIcon = {
                     Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(end = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
@@ -611,14 +611,14 @@ private fun Preview_GradientBackgroundWithIcons() {
                 shape = RoundedCornerShape(28.dp),
                 leadingIcon = {
                     Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(start = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
                 },
                 trailingIcon = {
                     Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
+                        modifier = Modifier.padding(end = AppDimens.Padding.padding4),
                         painter = painterResource(Res.drawable.ic_search),
                         contentDescription = ExtConstants.StringConstants.EMPTY
                     )
