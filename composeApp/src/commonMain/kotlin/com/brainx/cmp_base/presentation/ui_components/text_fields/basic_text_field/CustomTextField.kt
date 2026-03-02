@@ -164,9 +164,9 @@ fun CustomTextField(
     visualTransformation: VisualTransformation=VisualTransformation.None,
     keyboardActions: KeyboardActions = KeyboardActions(),
     onValueChange: (String) -> Unit,
-    paddingLeadingIconEnd: Dp = AppDimens.Padding.padding4,
-    paddingTrailingIconStart: Dp = AppDimens.Padding.padding4,
-    paddingTrailingIconEnd: Dp = AppDimens.Padding.padding4,
+    paddingLeadingIconEnd: Dp = AppDimens.Padding.iconPadding,
+    paddingTrailingIconStart: Dp = AppDimens.Padding.iconPadding,
+    paddingTrailingIconEnd: Dp = AppDimens.Padding.iconPadding,
     leadingIcon: (@Composable() () -> Unit)? = null,
     trailingIcon: (@Composable() () -> Unit)? = null,
     onCursorPositionChange: ((Int) -> Unit)? = null,
@@ -176,10 +176,10 @@ fun CustomTextField(
     borderColor: Color? = null,
     borderBrush: Brush? = null,
     borderWidth: Dp? = null,
-    contentPaddingStart: Dp = AppDimens.Padding.padding4,
-    contentPaddingEnd: Dp = AppDimens.Padding.padding4,
-    contentPaddingTop: Dp = AppDimens.Padding.padding4,
-    contentPaddingBottom: Dp = AppDimens.Padding.padding4,
+    contentPaddingStart: Dp = AppDimens.Padding.padding8,
+    contentPaddingEnd: Dp = AppDimens.Padding.padding8,
+    contentPaddingTop: Dp = AppDimens.Padding.padding8,
+    contentPaddingBottom: Dp = AppDimens.Padding.padding8,
 ) {
     if (backgroundColor != null && backgroundBrush != null) {
         throw IllegalArgumentException("CustomTextField: 'backgroundColor' and 'backgroundBrush' cannot be used together. Use only one.")

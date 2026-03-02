@@ -7,6 +7,18 @@ sealed class AppRoutes {
     data object MainHome : AppRoutes()
 
     @Serializable
+    data object ButtonsDemo : AppRoutes()
+
+    @Serializable
+    data object TextFieldsDemo : AppRoutes()
+
+    @Serializable
+    data object UnderlineTextFieldsDemo : AppRoutes()
+
+    @Serializable
+    data object TextDemo : AppRoutes()
+
+    @Serializable
     data class Detail(val mediaDataModelJson: String) : AppRoutes()
 
     @Serializable

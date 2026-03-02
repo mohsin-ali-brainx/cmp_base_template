@@ -3,6 +3,8 @@
     <string name="search_movies">Search Movies...</string>
     <string name="search">Search</string>
     <string name="play_video">Play Video</string>
+    <string name="email">Email</string>
+
 
 
 </resources>
