@@ -1,19 +1,19 @@
 package com.brainx.cmp_base.presentation.ui_components.textfield
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
-import com.brainx.cmp_base.presentation.theme.LocalAppTheme
+import com.brainx.cmp_base.presentation.theme.AppDimens
+import com.brainx.cmp_base.presentation.theme.colors.LocalAppTheme
 import com.brainx.cmp_base.presentation.theme.appPrimaryFontFamily
 
 @Composable
 fun editTextStyle(
-    fontSize: TextUnit = MaterialTheme.typography.bodyLarge.fontSize,
-    textColor: Color = LocalAppTheme.current.primaryWhiteTextColor,
+    fontSize: TextUnit = AppDimens.Fonts.font16,
+    textColor: Color = LocalAppTheme.current.editText.tertiaryWhiteTextColor,
     textAlign: TextAlign = TextAlign.Start
 )= TextStyle(
     textColor,
@@ -21,5 +21,6 @@ fun editTextStyle(
     fontSize = fontSize,
     fontFamily = appPrimaryFontFamily(),
     textAlign = textAlign)
+
 
 

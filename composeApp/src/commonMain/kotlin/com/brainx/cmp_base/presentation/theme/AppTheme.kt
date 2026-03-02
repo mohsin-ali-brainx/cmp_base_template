@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import com.brainx.cmp_base.presentation.theme.colors.LocalAppTheme
+import com.brainx.cmp_base.presentation.theme.colors.buildAppTheme
 
 @Composable
 fun AppTheme(

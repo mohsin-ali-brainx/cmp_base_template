@@ -6,8 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
@@ -43,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import com.brainx.cmp_base.presentation.theme.AppDimens
-import com.brainx.cmp_base.presentation.theme.LocalAppTheme
+import com.brainx.cmp_base.presentation.theme.colors.LocalAppTheme
 import com.brainx.cmp_base.presentation.theme.defaultEditTextShape
 import com.brainx.utils_extensions.constants.ExtConstants
 import org.jetbrains.compose.resources.painterResource
@@ -54,7 +53,7 @@ import basecmp.composeapp.generated.resources.search_movies
 import com.brainx.cmp_base.presentation.theme.AppTheme
 
 @Composable
-fun CustomBasicTextField(
+private fun CustomBasicTextField(
     modifier: Modifier = Modifier.fillMaxWidth(),
     text: String,
     placeHolderText:String?=null,
@@ -62,7 +61,7 @@ fun CustomBasicTextField(
     textStyle: TextStyle = editTextStyle(),
     hintTextColor: Color?=null,
     hintTextStyle: TextStyle = editTextStyle(
-        textColor = hintTextColor ?: MaterialTheme.colorScheme.onSecondaryContainer
+        textColor = hintTextColor ?: Color.Gray
     ),
     maxLength:Int?=null,
     singleLine:Boolean=true,
@@ -161,11 +160,11 @@ fun CustomTextField(
     modifier: Modifier = Modifier.fillMaxWidth(),
     text: String,
     placeHolderText:String?=null,
-    cursorBrush: Color = Color.White,
+    cursorBrush: Color = Color.Black,
     textStyle: TextStyle = editTextStyle(),
     hintTextColor: Color?=null,
     hintTextStyle: TextStyle = editTextStyle(
-        textColor = hintTextColor ?: MaterialTheme.colorScheme.onSecondaryContainer
+        textColor = hintTextColor ?: Color.Gray
     ),
     maxLength:Int?=null,
     singleLine:Boolean=true,
@@ -177,21 +176,67 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     paddingLeadingIconEnd: Dp = AppDimens.Padding.smallPadding,
     paddingTrailingIconStart: Dp = AppDimens.Padding.smallPadding,
+    paddingTrailingIconEnd: Dp = AppDimens.Padding.smallPadding,
     leadingIcon: (@Composable() () -> Unit)? = null,
     trailingIcon: (@Composable() () -> Unit)? = null,
-    onCursorPositionChange: ((Int) -> Unit)?=null,
+    onCursorPositionChange: ((Int) -> Unit)? = null,
+    backgroundColor: Color? = null,
+    shape: Shape? = null,
+    borderColor: Color? = null,
+    borderWidth: Dp? = null,
 ) {
-    Layout(
-        modifier = modifier.padding(
+    val hasBorder = borderColor != null && borderWidth != null && borderWidth > 0.dp
+    val hasStyling = backgroundColor != null || shape != null || hasBorder
+    val containerShape = when {
+        shape != null -> shape
+        hasStyling -> defaultEditTextShape()
+        else -> null
+    }
+    val layoutModifier = Modifier
+        .then(
+            when {
+                backgroundColor != null && containerShape != null ->
+                    Modifier.background(backgroundColor, containerShape)
+                else -> Modifier
+            }
+        )
+        .then(
+            when {
+                hasBorder && containerShape != null ->
+                    Modifier.border(borderWidth, borderColor, containerShape)
+                else -> Modifier
+            }
+        )
+        .then(if (containerShape != null) Modifier.clip(containerShape) else Modifier)
+        .padding(
             vertical = AppDimens.Padding.xxSmallPadding,
             horizontal = AppDimens.Padding.xxSmallPadding
-        ),
+        )
+    Layout(
+        modifier = modifier.then(layoutModifier),
         content = {
             if (leadingIcon != null) leadingIcon()
             Box(
-                modifier = Modifier.padding(
-                    start = paddingLeadingIconEnd,
-                    end = paddingTrailingIconStart
+                modifier = Modifier.then(
+                    if (leadingIcon != null && trailingIcon != null){
+                        Modifier.padding(
+                            start = paddingLeadingIconEnd,
+                            end = paddingTrailingIconStart
+                        )
+                    }else if (leadingIcon != null){
+                        Modifier.padding(
+                            start = paddingLeadingIconEnd
+                        )
+                    }else if (trailingIcon != null){
+                        Modifier.padding(
+                            start = AppDimens.Padding.smallPadding,
+                            end = paddingTrailingIconStart
+                        )
+                    }else{
+                        Modifier.padding(
+                                horizontal = AppDimens.Padding.smallPadding,
+                            )
+                    }
                 )
             ) {
                 CustomBasicTextField(
@@ -213,7 +258,11 @@ fun CustomTextField(
                     onCursorPositionChange = onCursorPositionChange
                 )
             }
-            if (trailingIcon != null) trailingIcon()
+            if (trailingIcon != null) {
+                Box(modifier = Modifier.padding(end = paddingTrailingIconEnd)) {
+                    trailingIcon()
+                }
+            }
         }
     ) { measurables, constraints ->
         val looseConstraints = constraints.copy(minWidth = 0, minHeight = 0)
@@ -244,282 +293,4 @@ fun CustomTextField(
             trailingPlaceable?.placeRelative(x, (height - (trailingPlaceable.height)) / 2)
         }
     }
-
 }
-
-@Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-    text: String,
-    imeAction: ImeAction = ImeAction.Search,
-    keyboardActions: KeyboardActions = KeyboardActions(),
-    onValueChange: (String) -> Unit
-){
-    val appThemeColor =  LocalAppTheme.current
-    val editTextModifier = modifier
-        .height(AppDimens.EditText.searchBarHeight)
-        .background(appThemeColor.mainEditTextColor, shape = defaultEditTextShape())
-        .clip(defaultEditTextShape())
-    CustomTextField(
-        text = text,
-        placeHolderText = stringResource(Res.string.search_movies),
-        modifier = editTextModifier,
-        hintTextColor = appThemeColor.primaryWhiteTextColor.copy(alpha = 0.3F),
-        onValueChange = onValueChange,
-        imeAction = imeAction,
-        keyboardActions = keyboardActions,
-        leadingIcon = {
-            Image(
-                modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
-                painter = painterResource( Res.drawable.ic_search), contentDescription = ExtConstants.StringConstants.EMPTY )
-        }
-    )
-}
-
-// region — Grouped previews (all examples for comparison)
-
-@Preview(showBackground = true, name = "BasicTextField — All")
-@Composable
-private fun PreviewCustomBasicTextField_All() {
-    AppTheme(darkTheme = false, dynamicColor = false) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text("Empty", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomBasicTextField(text = "", placeHolderText = "Enter text…", onValueChange = { })
-            Text("With text", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomBasicTextField(text = "Sample input text", placeHolderText = "Placeholder", onValueChange = { })
-            Text("Disabled", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomBasicTextField(text = "Disabled field", placeHolderText = "Placeholder", enabled = false, onValueChange = { })
-            Text("Multiline", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomBasicTextField(
-                text = "Line one\nLine two\nLine three",
-                placeHolderText = "Multiline…",
-                singleLine = false,
-                minLines = 3,
-                maxLines = 5,
-                onValueChange = { }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "CustomTextField — All (states & icons)")
-@Composable
-private fun PreviewCustomTextField_All() {
-    AppTheme(darkTheme = false, dynamicColor = false) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text("Empty", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(text = "", placeHolderText = "Type here…", onValueChange = { })
-            Text("With text", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(text = "Some content", placeHolderText = "Placeholder", onValueChange = { })
-            Text("Leading icon", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                text = "",
-                placeHolderText = "Search…",
-                onValueChange = { },
-                leadingIcon = {
-                    Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
-                        painter = painterResource(Res.drawable.ic_search),
-                        contentDescription = ExtConstants.StringConstants.EMPTY
-                    )
-                }
-            )
-            Text("Trailing icon", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                text = "With trailing",
-                placeHolderText = "Placeholder",
-                onValueChange = { },
-                trailingIcon = {
-                    Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
-                        painter = painterResource(Res.drawable.ic_search),
-                        contentDescription = ExtConstants.StringConstants.EMPTY
-                    )
-                }
-            )
-            Text("Both icons", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                text = "",
-                placeHolderText = "Search movies…",
-                onValueChange = { },
-                leadingIcon = {
-                    Image(
-                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
-                        painter = painterResource(Res.drawable.ic_search),
-                        contentDescription = ExtConstants.StringConstants.EMPTY
-                    )
-                },
-                trailingIcon = {
-                    Image(
-                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
-                        painter = painterResource(Res.drawable.ic_search),
-                        contentDescription = ExtConstants.StringConstants.EMPTY
-                    )
-                }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "CustomTextField — All (background, border, shapes)")
-@Composable
-private fun PreviewCustomTextField_BackgroundBorderShapes_All() {
-    AppTheme(darkTheme = false, dynamicColor = false) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text("Background only", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(
-                        color = Color(0xFFE8E8E8),
-                        shape = RoundedCornerShape(AppDimens.ShapeDimens.defaultEditTextCornerRadius)
-                    )
-                    .clip(RoundedCornerShape(AppDimens.ShapeDimens.defaultEditTextCornerRadius))
-                    .padding(AppDimens.Padding.xxSmallPadding),
-                text = "",
-                placeHolderText = "Background only…",
-                onValueChange = { }
-            )
-            Text("Border only", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .border(
-                        width = 2.dp,
-                        color = Color(0xFF2196F3),
-                        shape = RoundedCornerShape(AppDimens.ShapeDimens.defaultEditTextCornerRadius)
-                    )
-                    .clip(RoundedCornerShape(AppDimens.ShapeDimens.defaultEditTextCornerRadius))
-                    .padding(AppDimens.Padding.xxSmallPadding),
-                text = "Bordered",
-                placeHolderText = "Border only…",
-                onValueChange = { }
-            )
-            Text("Background + border", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(color = Color(0xFFF5F5F5), shape = RoundedCornerShape(12.dp))
-                    .border(1.dp, Color(0xFF9E9E9E), RoundedCornerShape(12.dp))
-                    .clip(RoundedCornerShape(12.dp))
-                    .padding(AppDimens.Padding.xxSmallPadding),
-                text = "",
-                placeHolderText = "Background + border…",
-                onValueChange = { }
-            )
-            Text("Rounded (large)", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(color = Color(0xFFE3F2FD), shape = RoundedCornerShape(24.dp))
-                    .clip(RoundedCornerShape(24.dp))
-                    .padding(AppDimens.Padding.xxSmallPadding),
-                text = "",
-                placeHolderText = "Large rounded corners…",
-                onValueChange = { }
-            )
-            Text("Cut corners", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(color = Color(0xFFFFF3E0), shape = CutCornerShape(12.dp))
-                    .clip(CutCornerShape(12.dp))
-                    .padding(AppDimens.Padding.xxSmallPadding),
-                text = "",
-                placeHolderText = "Cut corners…",
-                onValueChange = { }
-            )
-            Text("Pill shape", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            val pillShape = RoundedCornerShape(28.dp)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .background(color = Color(0xFFE8F5E9), shape = pillShape)
-                    .clip(pillShape)
-                    .padding(horizontal = 20.dp, vertical = 4.dp),
-                text = "",
-                placeHolderText = "Pill shape…",
-                onValueChange = { }
-            )
-            Text("Rectangle (sharp)", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            val rectShape = RoundedCornerShape(0.dp)
-            CustomTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .background(color = Color(0xFFECEFF1), shape = rectShape)
-                    .border(1.dp, Color(0xFF90A4AE), rectShape)
-                    .padding(AppDimens.Padding.xxSmallPadding),
-                text = "",
-                placeHolderText = "Sharp rectangle…",
-                onValueChange = { }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "SearchBar — All")
-@Composable
-private fun PreviewSearchBar_All() {
-    AppTheme(darkTheme = false, dynamicColor = false) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text("Empty", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            SearchBar(modifier = Modifier, text = "") { }
-            Text("With text", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            SearchBar(modifier = Modifier, text = "action movie") { }
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "Dark theme — All")
-@Composable
-private fun PreviewAll_DarkTheme() {
-    AppTheme(darkTheme = true, dynamicColor = false) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text("BasicTextField", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomBasicTextField(text = "Dark theme", placeHolderText = "Placeholder", onValueChange = { })
-            Text("CustomTextField", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            CustomTextField(text = "Dark theme field", placeHolderText = "Placeholder", onValueChange = { })
-            Text("SearchBar", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            SearchBar(modifier = Modifier, text = "") { }
-        }
-    }
-}
-
-// endregion

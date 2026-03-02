@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import com.brainx.cmp_base.presentation.theme.LocalAppTheme
+import com.brainx.cmp_base.presentation.theme.colors.LocalAppTheme
 import com.brainx.cmp_base.presentation.theme.AppDimens
 import com.brainx.cmp_base.presentation.ui_components.text.CustomText
 import com.brainx.cmp_base.presentation.ui_components.text.CustomTextToDisplay
@@ -90,7 +90,7 @@ private fun AppDefaultButton(
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     buttonText:CustomTextToDisplay.StringResourceText,
-    buttonColor: Color = LocalAppTheme.current.primaryButtonColor,
+    buttonColor: Color = LocalAppTheme.current.button.primaryColor,
     isEnable:Boolean=true,
     borderColor: Color?=null,
     leadingIcon: (@Composable() () -> Unit)? = null,
@@ -104,7 +104,7 @@ fun PrimaryButton(
     AppDefaultButton(
         modifier = modifier.then(Modifier.defaultFullWidthButtonModifier()),
         buttonText = buttonText,
-        textColor = LocalAppTheme.current.primaryWhiteTextColor,
+        textColor = LocalAppTheme.current.textView.primaryBlackTextColor,
         buttonColor = buttonColor,
         fontSize = AppDimens.Fonts.font16,
         fontWeight = FontWeight.W600,
