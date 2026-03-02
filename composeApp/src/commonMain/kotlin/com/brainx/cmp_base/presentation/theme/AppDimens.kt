@@ -9,6 +9,9 @@ sealed interface AppDimens{
     data object Padding: AppDimens {
         val zero = 0.dp
         val textPadding4 = 4.0.dp
+
+        val iconPadding = 8.0.dp
+
         val padding4 = 4.0.dp
         val padding8 = 8.0.dp
         val padding12 = 12.0.dp
@@ -28,6 +31,8 @@ sealed interface AppDimens{
     data object Button: AppDimens {
         val zero = 0.dp
         val defaultButtonHeight =  58.dp
+        val borderWidthHalf = 0.5.dp
+
     }
 
     data object EditText: AppDimens {
