@@ -3,6 +3,7 @@ package com.brainx.cmp_base.presentation.ui_components.textfield
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
@@ -181,16 +183,25 @@ fun CustomTextField(
     trailingIcon: (@Composable() () -> Unit)? = null,
     onCursorPositionChange: ((Int) -> Unit)? = null,
     backgroundColor: Color? = null,
+    backgroundBrush: Brush? = null,
     shape: Shape? = null,
     borderColor: Color? = null,
+    borderBrush: Brush? = null,
     borderWidth: Dp? = null,
     contentPaddingStart: Dp = AppDimens.Padding.smallPadding,
     contentPaddingEnd: Dp = AppDimens.Padding.smallPadding,
     contentPaddingTop: Dp = AppDimens.Padding.smallPadding,
     contentPaddingBottom: Dp = AppDimens.Padding.smallPadding,
 ) {
-    val hasBorder = borderColor != null && borderWidth != null && borderWidth > 0.dp
-    val hasStyling = backgroundColor != null || shape != null || hasBorder
+    if (backgroundColor != null && backgroundBrush != null) {
+        throw IllegalArgumentException("CustomTextField: 'backgroundColor' and 'backgroundBrush' cannot be used together. Use only one.")
+    }
+    if (borderColor != null && borderBrush != null) {
+        throw IllegalArgumentException("CustomTextField: 'borderColor' and 'borderBrush' cannot be used together. Use only one.")
+    }
+
+    val hasBorder = borderWidth != null && borderWidth > 0.dp && (borderColor != null || borderBrush != null)
+    val hasStyling = backgroundColor != null || backgroundBrush != null || shape != null || hasBorder
     val containerShape = when {
         shape != null -> shape
         hasStyling -> defaultEditTextShape()
@@ -199,6 +210,8 @@ fun CustomTextField(
     val layoutModifier = Modifier
         .then(
             when {
+                backgroundBrush != null && containerShape != null ->
+                    Modifier.background(backgroundBrush, containerShape)
                 backgroundColor != null && containerShape != null ->
                     Modifier.background(backgroundColor, containerShape)
                 else -> Modifier
@@ -206,8 +219,10 @@ fun CustomTextField(
         )
         .then(
             when {
-                hasBorder && containerShape != null ->
-                    Modifier.border(borderWidth!!, borderColor!!, containerShape)
+                hasBorder && containerShape != null && borderBrush != null ->
+                    Modifier.border(BorderStroke(borderWidth!!, borderBrush), containerShape)
+                hasBorder && containerShape != null && borderColor != null ->
+                    Modifier.border(borderWidth!!, borderColor, containerShape)
                 else -> Modifier
             }
         )

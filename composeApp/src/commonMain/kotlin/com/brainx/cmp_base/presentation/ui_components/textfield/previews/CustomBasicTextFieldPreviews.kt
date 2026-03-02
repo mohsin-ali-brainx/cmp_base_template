@@ -9,7 +9,9 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import basecmp.composeapp.generated.resources.Res
@@ -501,6 +503,119 @@ private fun Preview_ContentPaddingTrailingIcon() {
                 contentPaddingEnd = 12.dp,
                 contentPaddingTop = 12.dp,
                 contentPaddingBottom = 12.dp,
+                trailingIcon = {
+                    Image(
+                        modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
+                        painter = painterResource(Res.drawable.ic_search),
+                        contentDescription = ExtConstants.StringConstants.EMPTY
+                    )
+                }
+            )
+        }
+    }
+}
+
+// endregion
+
+// region — Gradient background & border
+
+@Preview(showBackground = true, name = "Gradient background — horizontal")
+@Composable
+private fun Preview_GradientBackgroundHorizontal() {
+    AppTheme(darkTheme = false, dynamicColor = false) {
+        Box(Modifier.fillMaxWidth().padding(PreviewPadding)) {
+            CustomTextField(
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                text = "",
+                placeHolderText = "Horizontal gradient…",
+                onValueChange = { },
+                backgroundBrush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFFE3F2FD), // light blue
+                        Color(0xFFBBDEFB), // soft blue
+                        Color(0xFF90CAF9)  // medium soft blue
+                    )
+                ),
+                shape = RoundedCornerShape(24.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Gradient background — vertical")
+@Composable
+private fun Preview_GradientBackgroundVertical() {
+    AppTheme(darkTheme = false, dynamicColor = false) {
+        Box(Modifier.fillMaxWidth().padding(PreviewPadding)) {
+            CustomTextField(
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                text = "",
+                placeHolderText = "Vertical gradient…",
+                onValueChange = { },
+                backgroundBrush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFFE3F2FD), // light blue
+                        Color(0xFF90CAF9)  // medium soft blue
+                    )
+                ),
+                shape = RoundedCornerShape(24.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Gradient border")
+@Composable
+private fun Preview_GradientBorder() {
+    AppTheme(darkTheme = false, dynamicColor = false) {
+        Box(Modifier.fillMaxWidth().padding(PreviewPadding)) {
+            CustomTextField(
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                text = "",
+                placeHolderText = "Gradient border…",
+                onValueChange = { },
+                backgroundColor = Color(0xFFFFFFFF),
+                shape = RoundedCornerShape(24.dp),
+                borderWidth = 2.dp,
+                borderBrush = Brush.horizontalGradient(
+                    colors = listOf(
+                        Color(0xFFBBDEFB), // soft blue
+                        Color(0xFF90CAF9), // medium soft blue
+                        Color(0xFF64B5F6)  // slightly stronger but still soft
+                    )
+                )
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Gradient background + icons")
+@Composable
+private fun Preview_GradientBackgroundWithIcons() {
+    AppTheme(darkTheme = false, dynamicColor = false) {
+        Box(Modifier.fillMaxWidth().padding(PreviewPadding)) {
+            CustomTextField(
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                text = "",
+                placeHolderText = "Search with gradient…",
+                onValueChange = { },
+                backgroundBrush = Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFFE3F2FD), // light blue
+                        Color(0xFFBBDEFB), // soft blue
+                        Color(0xFF90CAF9)  // medium soft blue
+                    ),
+                    start = Offset.Zero,
+                    end = Offset(1000f, 1000f)
+                ),
+                shape = RoundedCornerShape(28.dp),
+                leadingIcon = {
+                    Image(
+                        modifier = Modifier.padding(start = AppDimens.Padding.smallPadding),
+                        painter = painterResource(Res.drawable.ic_search),
+                        contentDescription = ExtConstants.StringConstants.EMPTY
+                    )
+                },
                 trailingIcon = {
                     Image(
                         modifier = Modifier.padding(end = AppDimens.Padding.smallPadding),
