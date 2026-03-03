@@ -74,10 +74,10 @@ fun CustomBasicUnderlineTextField(
     text: String,
     label:StringResource,
     supportText: CustomTextToDisplay?=null,
-    cursorBrush: Color = LocalAppTheme.current.editText.primaryBlackTextColor,
+    cursorBrush: Color = Color.Black,
     textStyle: TextStyle = defaultEditTextStyle(),
     labelStyle: TextStyle = defaultEditTextLabelStyle(),
-    supportTextColor: Color = LocalAppTheme.current.editText.redTextColor,
+    supportTextColor: Color = Color.Red,
     supportTextStyle: TextStyle = basicEditTextSupportStyle(textColor = supportTextColor),
     maxLength:Int?=null,
     singleLine:Boolean=true,
@@ -111,7 +111,7 @@ fun CustomBasicUnderlineTextField(
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
 
-    val invalidInputErrorColor = LocalAppTheme.current.editText.redTextColor
+    val invalidInputErrorColor = Color.Red
 
     val textFieldColors by remember(isTextFieldValid) {
         derivedStateOf {

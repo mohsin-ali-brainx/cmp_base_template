@@ -59,10 +59,10 @@ fun CustomOutlineTextField(
     text: String,
     label: StringResource,
     supportText: CustomTextToDisplay? = null,
-    cursorBrush: Color = LocalAppTheme.current.editText.primaryBlackTextColor,
+    cursorBrush: Color = Color.Black,
     textStyle: TextStyle = defaultEditTextStyle(),
     labelStyle: TextStyle = defaultEditTextLabelStyle(),
-    supportTextColor: Color = LocalAppTheme.current.editText.redTextColor,
+    supportTextColor: Color = Color.Red,
     supportTextStyle: TextStyle = basicEditTextSupportStyle(textColor = supportTextColor),
     maxLength: Int? = null,
     singleLine: Boolean = true,
@@ -86,7 +86,7 @@ fun CustomOutlineTextField(
 ) {
     var isTextFieldValid by remember(isValid) { mutableStateOf(isValid) }
     val interactionSource = remember { MutableInteractionSource() }
-    val invalidInputErrorColor = LocalAppTheme.current.editText.redTextColor
+    val invalidInputErrorColor = Color.Red
 
     val resolvedColors by remember(isTextFieldValid) {
         derivedStateOf {
