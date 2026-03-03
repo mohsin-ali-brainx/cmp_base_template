@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -13,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import com.brainx.cmp_base.presentation.theme.AppDimens
 import com.brainx.cmp_base.presentation.theme.appPrimaryFontFamily
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -27,29 +29,33 @@ sealed interface CustomTextToDisplay{
 fun CustomText(
     modifier: Modifier,
     text: CustomTextToDisplay,
-    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
+    fontSize: TextUnit = AppDimens.Fonts.font16,
     textAlign: TextAlign = TextAlign.Center,
-    color: Color = MaterialTheme.colorScheme.onPrimary,
+    color: Color = Color.Black,
     fontWeight: FontWeight = FontWeight.W400,
     minLines:Int = 1,
     maxLines:Int = Int.MAX_VALUE,
     fontStyle: FontStyle = FontStyle.Normal,
     textStyle: TextStyle?=null,
     textOverflow: TextOverflow = TextOverflow.Ellipsis,
-    textDecoration: TextDecoration? = null
+    textDecoration: TextDecoration? = null,
+    brush: Brush? = null
 ){
+
+    val baseStyle = TextStyle(
+        fontWeight = fontWeight,
+        fontFamily = appPrimaryFontFamily(),
+        fontSize = fontSize,
+        fontStyle = fontStyle,
+        color = color
+    )
+    val defaultStyle = textStyle ?: if (brush != null) baseStyle.copy(brush = brush) else baseStyle
     when(text){
         is CustomTextToDisplay.StringResourceText->{
             Text(
                 modifier =modifier,
                 text =  stringResource(text.text),
-                style = textStyle ?: TextStyle(
-                    fontWeight = fontWeight,
-                    fontFamily = appPrimaryFontFamily(),
-                    fontSize = fontSize,
-                    fontStyle = fontStyle,
-                    color = color
-                ),
+                style = defaultStyle,
                 textAlign = textAlign,
                 minLines = minLines,
                 maxLines = maxLines,
@@ -61,13 +67,7 @@ fun CustomText(
             Text(
                 modifier =modifier,
                 text =  text.text,
-                style = textStyle ?: TextStyle(
-                    fontWeight = fontWeight,
-                    fontFamily = appPrimaryFontFamily(),
-                    fontSize = fontSize,
-                    fontStyle = fontStyle,
-                    color = color
-                ),
+                style = defaultStyle,
                 textAlign = textAlign,
                 minLines = minLines,
                 maxLines = maxLines,
@@ -79,13 +79,7 @@ fun CustomText(
             Text(
                 modifier =modifier,
                 text =  text.text,
-                style = textStyle ?: TextStyle(
-                    fontWeight = fontWeight,
-                    fontFamily = appPrimaryFontFamily(),
-                    fontSize = fontSize,
-                    fontStyle = fontStyle,
-                    color = color
-                ),
+                style = defaultStyle,
                 textAlign = textAlign,
                 minLines = minLines,
                 maxLines = maxLines,

@@ -34,6 +34,7 @@ kotlin {
             baseName = frameworkName
             isStatic = true
 
+            export("com.mohamedrejeb.calf:calf-ui:0.9.0")
         }
     }
 
@@ -52,7 +53,6 @@ kotlin {
             implementation(project(":shared:core:domain"))
             implementation(project(":shared:core:bootstrapDI"))
             implementation(project(":shared:utilsExtensions"))
-            implementation(project(":shared:uiComponents"))
 
 
         }
@@ -76,12 +76,13 @@ kotlin {
             implementation(project(":shared:core:bootstrapDI"))
             implementation(project(":shared:core:domain"))
             implementation(project(":shared:utilsExtensions"))
-            implementation(project(":shared:uiComponents"))
 
 
             implementation(libs.constraintlayout.compose.multiplatform)
 
             implementation(libs.kotlinx.serialization.json)
+
+            api(libs.calf.ui)
 
 
         }
@@ -90,7 +91,6 @@ kotlin {
             implementation(project(":shared:core:bootstrapDI"))
             implementation(project(":shared:core:domain"))
             implementation(project(":shared:utilsExtensions"))
-            implementation(project(":shared:uiComponents"))
 
 
         }
