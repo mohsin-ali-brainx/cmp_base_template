@@ -120,6 +120,26 @@ private fun Preview_Underline_Error() {
     }
 }
 
+@Preview(showBackground = true, name = "Underline — helper (custom color)")
+@Composable
+private fun Preview_Underline_HelperCustomColor() {
+    AppTheme(darkTheme = false, dynamicColor = false) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(PreviewPadding)
+        ) {
+            CustomBasicUnderlineTextField(
+                text = "Valid value",
+                label = labelSearchMovies,
+                supportText = CustomTextToDisplay.StringText("Looks good!"),
+                supportTextColor = Color(0xFF4CAF50),
+                onValueChange = { }
+            )
+        }
+    }
+}
+
 // endregion
 
 // region — Disabled, single-line & multi-line

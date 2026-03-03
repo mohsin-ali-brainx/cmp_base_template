@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -89,6 +90,22 @@ private fun Preview_Outline_Error() {
                 label = labelSearchMovies,
                 isValid = false,
                 supportText = CustomTextToDisplay.StringText("Minimum 3 characters required"),
+                onValueChange = { }
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, name = "Outline — helper (custom color)")
+@Composable
+private fun Preview_Outline_HelperCustomColor() {
+    AppTheme(darkTheme = false, dynamicColor = false) {
+        Box(modifier = Modifier.fillMaxWidth().padding(PreviewPadding)) {
+            CustomOutlineTextField(
+                text = "Valid value",
+                label = labelSearchMovies,
+                supportText = CustomTextToDisplay.StringText("Looks good!"),
+                supportTextColor = Color(0xFF4CAF50),
                 onValueChange = { }
             )
         }
