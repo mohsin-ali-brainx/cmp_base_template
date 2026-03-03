@@ -10,6 +10,7 @@ import com.brainx.cmp_base.presentation.screens.component_playground.ComponentBu
 import com.brainx.cmp_base.presentation.screens.component_playground.ComponentTextFieldsScreen
 import com.brainx.cmp_base.presentation.screens.component_playground.ComponentUnderlineTextFieldsScreen
 import com.brainx.cmp_base.presentation.screens.component_playground.ComponentTextScreen
+import com.brainx.cmp_base.presentation.screens.component_playground.ComponentPickersScreen
 import com.brainx.utils_extensions.navigation.safeNavToNextScreen
 
 
@@ -27,6 +28,7 @@ fun AppNavHostGraph(
         textFieldsDemoRoute(navController = navController)
         underlineTextFieldsDemoRoute(navController = navController)
         textDemoRoute(navController = navController)
+        pickersDemoRoute(navController = navController)
     }
 }
 
@@ -42,6 +44,7 @@ private fun NavGraphBuilder.mainHomeScreenRoute(
                     AppRoutes.TextFieldsDemo -> navController.safeNavToNextScreen(AppRoutes.TextFieldsDemo)
                     AppRoutes.UnderlineTextFieldsDemo -> navController.safeNavToNextScreen(AppRoutes.UnderlineTextFieldsDemo)
                     AppRoutes.TextDemo -> navController.safeNavToNextScreen(AppRoutes.TextDemo)
+                    AppRoutes.PickersDemo -> navController.safeNavToNextScreen(AppRoutes.PickersDemo)
                     else -> Unit
                 }
             }
@@ -78,5 +81,13 @@ private fun NavGraphBuilder.textDemoRoute(
 ) {
     composable<AppRoutes.TextDemo> {
         ComponentTextScreen()
+    }
+}
+
+private fun NavGraphBuilder.pickersDemoRoute(
+    navController: NavHostController
+) {
+    composable<AppRoutes.PickersDemo> {
+        ComponentPickersScreen()
     }
 }

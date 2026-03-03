@@ -129,7 +129,8 @@ private fun CustomBasicTextField(
             Box(
                 modifier = Modifier.fillMaxWidth(), contentAlignment = hintTextAlignment
             ) {
-                if (text.isEmpty()) {
+                // Use textFieldValue.text so placeholder visibility is in sync with what's displayed
+                if (textFieldValue.text.isEmpty()) {
                     placeHolderText?.let {
                         Text(
                             modifier = Modifier.padding(AppDimens.Padding.zero),
@@ -139,8 +140,8 @@ private fun CustomBasicTextField(
                         )
                     }
                 }
+                innerTextField()
             }
-            innerTextField()
         })
 }
 

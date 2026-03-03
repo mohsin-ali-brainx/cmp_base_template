@@ -19,6 +19,9 @@ sealed class AppRoutes {
     data object TextDemo : AppRoutes()
 
     @Serializable
+    data object PickersDemo : AppRoutes()
+
+    @Serializable
     data class Detail(val mediaDataModelJson: String) : AppRoutes()
 
     @Serializable

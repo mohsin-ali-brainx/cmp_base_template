@@ -69,7 +69,8 @@ private fun MainContent(
                 "Buttons" to AppRoutes.ButtonsDemo,
                 "Filled text fields" to AppRoutes.TextFieldsDemo,
                 "Underline text fields" to AppRoutes.UnderlineTextFieldsDemo,
-                "Text" to AppRoutes.TextDemo
+                "Text" to AppRoutes.TextDemo,
+                "Pickers" to AppRoutes.PickersDemo
             )
 
             LazyColumn(

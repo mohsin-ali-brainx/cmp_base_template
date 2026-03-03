@@ -34,6 +34,7 @@ kotlin {
             baseName = frameworkName
             isStatic = true
 
+            export("com.mohamedrejeb.calf:calf-ui:0.9.0")
         }
     }
 
@@ -80,6 +81,8 @@ kotlin {
             implementation(libs.constraintlayout.compose.multiplatform)
 
             implementation(libs.kotlinx.serialization.json)
+
+            api(libs.calf.ui)
 
 
         }
