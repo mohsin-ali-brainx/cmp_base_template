@@ -6,7 +6,7 @@ internal fun buildAppTheme(isDark: Boolean): AppColorTheme {
     return if (isDark) {
         AppDarkThemeColor()
     } else {
-        AppDarkThemeColor()
+        AppLightThemeColor()
     }
 }
 
